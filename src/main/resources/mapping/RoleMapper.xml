@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chaim.authorization.mapper.RoleMapper">
+
+    <sql id="roleColumns">
+        id, code, name
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+            sys_role (code, name)
+        VALUES
+            (#{role.code}, #{role.name})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE
+        FROM
+                   sys_role
+        WHERE
+            id = #{roleId}
+    </delete>
+
+    <select id="selectById" resultType="com.chaim.authorization.model.entity.Role">
+        SELECT
+            <include refid="roleColumns"/>
+        FROM
+            sys_role
+        WHERE
+            id = #{roleId}
+    </select>
+
+    <select id="selectAll" resultType="com.chaim.authorization.model.entity.Role">
+        SELECT
+            <include refid="roleColumns"/>
+        FROM
+            sys_role
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+            COUNT(id)
+        FROM
+            sys_role
+    </select>
+
+</mapper>

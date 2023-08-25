@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chaim.authorization.mapper.LoginMapper">
+
+    <sql id="LoginTableColumns">
+        id, user_name, token_id
+    </sql>
+
+    <insert id="saveLogin" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+            sys_login
+            (user_name, token_id)
+        VALUES
+            (#{userName}, #{tokenId})
+    </insert>
+
+    <insert id="firstLogin">
+        INSERT INTO
+            sys_login_count(user_name, count)
+        VALUES
+            (#{userName}, 1)
+    </insert>
+
+    <update id="update">
+        UPDATE
+            sys_login
+        SET
+            user_name = #{login.userName},
+            token_id = #{login.tokenId}
+        WHERE
+            id = #{login.id}
+    </update>
+
+    <update id="addLogin">
+        UPDATE
+            sys_login_count
+        SET
+            count = count + 1
+        WHERE
+            user_name = #{userName}
+    </update>
+
+    <select id="countLogin" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            sys_login
+        WHERE
+            user_name = #{userName}
+        AND
+            token_id = #{tokenId}
+    </select>
+
+
+    <select id="findUserNameByTokenId" resultType="java.lang.String">
+        SELECT
+            user_name
+        FROM
+            sys_login
+        WHERE
+            token_id = #{tokenId}
+    </select>
+
+    <select id="countLoginByUserName" resultType="java.lang.Integer">
+        SELECT
+            count
+        FROM
+            sys_login_count
+        WHERE
+            user_name = #{userName}
+    </select>
+
+    <select id="findAll" resultType="com.chaim.authorization.model.entity.Login">
+        SELECT
+            id, user_name userName, token_id tokenId
+        FROM
+            sys_login
+    </select>
+
+
+</mapper>

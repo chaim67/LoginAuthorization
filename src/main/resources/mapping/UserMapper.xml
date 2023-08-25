@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chaim.authorization.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.chaim.authorization.model.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+    </resultMap>
+
+    <sql id="userTableColumns">
+        id, user_name, password, phone
+    </sql>
+
+    <insert id="save" parameterType="com.chaim.authorization.model.entity.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+        INSERT INTO
+            sys_user (user_name, password, phone)
+        VALUE
+            (#{user.userName}, #{user.password}, #{user.phone});
+    </insert>
+
+    <update id="update" parameterType="com.chaim.authorization.model.entity.User" >
+        UPDATE
+            sys_user
+        SET
+            user_name = #{user.userName},
+            phone = #{user.phone},
+            password = #{user.password}
+        WHERE id = #{user.id}
+    </update>
+
+    <!-- 根据id查询用户信息 -->
+    <select id="findById" resultMap="UserResultMap">
+        SELECT
+            <include refid="userTableColumns"/>
+        FROM
+            sys_user
+        WHERE
+            id = #{id}
+    </select>
+
+    <!-- 根据用户名称查询用户信息 -->
+    <select id="findByUserName" resultMap="UserResultMap">
+        SELECT
+            <include refid="userTableColumns"/>
+        FROM
+            sys_user
+        WHERE
+            user_name = #{userName}
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findByPage" resultMap="UserResultMap">
+        select * from sys_user
+    </select>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE
+            FROM
+               sys_user
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!--查询记录数-->
+    <select id="count" resultType="java.lang.Long">
+        SELECT
+            count(*)
+        FROM
+            sys_user
+    </select>
+
+    <!--根据用户名称查询条数-->
+    <select id="countByUserName" resultType="java.lang.Long">
+        SELECT
+            count(*)
+        FROM
+            sys_user
+        WHERE
+            user_name = #{userName}
+    </select>
+
+
+</mapper>

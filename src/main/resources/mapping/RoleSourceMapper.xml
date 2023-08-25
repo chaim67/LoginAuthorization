@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chaim.authorization.mapper.RoleSourceMapper">
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+            sys_role_resource (role_id, resource_id)
+        VALUES
+            (#{roleId}, #{resourceId})
+    </insert>
+
+    <select id="selectByRoleId" resultType="com.chaim.authorization.model.entity.RoleResource">
+        SELECT
+            id, role_id, resource_id
+        FROM
+            sys_role_resource
+        WHERE
+            role_id = #{roleId}
+    </select>
+</mapper>
