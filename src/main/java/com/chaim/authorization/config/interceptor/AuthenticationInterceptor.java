@@ -4,10 +4,7 @@ import com.chaim.authorization.exception.BusinessException;
 import com.chaim.authorization.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +37,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
      * @param request http请求
      */
     private boolean userAuth(HttpServletRequest request) {
-        String tokenId = request.getHeader(TOKEN_NAME);
+        String tokenId = request.getParameter(TOKEN_NAME);
         if (StringUtils.isEmpty(tokenId)) {
             throw new BusinessException("您尚未登录,请登录系统！");
         }

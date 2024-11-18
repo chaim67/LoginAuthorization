@@ -17,7 +17,7 @@ import java.io.IOException;
  * @version 1.0
  */
 @Slf4j
-@Component
+//@Component
 public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override

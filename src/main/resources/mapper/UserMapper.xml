@@ -6,14 +6,14 @@
 
     <resultMap id="UserResultMap" type="com.chaim.authorization.model.entity.User">
         <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="phone" jdbcType="VARCHAR" property="phone" />
     </resultMap>
 
-    <sql id="userTableColumns">
-        id, user_name, password, phone
-    </sql>
+<!--    <sql id="userTableColumns">-->
+<!--        id, user_name, password, phone-->
+<!--    </sql>-->
 
     <insert id="save" parameterType="com.chaim.authorization.model.entity.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
         INSERT INTO
@@ -35,7 +35,7 @@
     <!-- 根据id查询用户信息 -->
     <select id="findById" resultMap="UserResultMap">
         SELECT
-            <include refid="userTableColumns"/>
+            id, user_name, password, phone
         FROM
             sys_user
         WHERE
@@ -45,7 +45,7 @@
     <!-- 根据用户名称查询用户信息 -->
     <select id="findByUserName" resultMap="UserResultMap">
         SELECT
-            <include refid="userTableColumns"/>
+            id, user_name, password, phone
         FROM
             sys_user
         WHERE

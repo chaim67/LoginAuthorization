@@ -2,11 +2,12 @@ package com.chaim.authorization.service;
 
 import com.chaim.authorization.model.entity.*;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     /**
      * 只做用户名和密码登录认证
      *
@@ -14,6 +15,7 @@ public interface UserService {
      * @return 用户详情
      * @throws UsernameNotFoundException 用户不存在
      */
+    @Override
     UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException;
 
     /**
